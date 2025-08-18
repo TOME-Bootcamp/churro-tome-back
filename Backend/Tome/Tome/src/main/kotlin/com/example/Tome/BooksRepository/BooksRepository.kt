@@ -12,4 +12,5 @@ interface BooksRepository : JpaRepository<Books, Long>{
     fun findByname(name : String): Books
     fun update(book: Books): Books
     fun delete(id: Long): Books
+    fun exists(string: String): Boolean
 }

@@ -9,12 +9,12 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "tags")
-class Publishers {
+class Publishers(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var publishsr_id: Long? = null
+    var publishsr_id: Long = 0,
 
     @Column
-    var name: String? = null
-}
+    var name: String = ""
+)

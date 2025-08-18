@@ -10,12 +10,12 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "tags")
 
-class Tags {
+class Tags(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var tags_id: Long? = null
+    var tags_id: Long = 0,
 
     @Column
     var name: String = ""
-}
+)

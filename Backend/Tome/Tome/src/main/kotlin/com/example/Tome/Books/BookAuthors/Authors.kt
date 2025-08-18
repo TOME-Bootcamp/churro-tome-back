@@ -13,14 +13,13 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "authors")
-class Authors {
+class Authors (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var author_id: Long? = null
+    var author_id: Long = 0,
 
     @Column
     var name: String = ""
 
-
-}
+)

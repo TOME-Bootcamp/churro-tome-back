@@ -13,21 +13,21 @@ class BooksService(private val booksRepository: BooksRepository) {
         val book = booksRepository.findById(id).orElse(null) ?: return null
         return toDTO(book)
     }
-    fun findByName(name: String): BooksDTO? {
+    fun findByTitle(name: String): BooksDTO? {
         val book = booksRepository.findByname(name)
         return toDTO(book)
     }
-    fun save(book: Books): BooksDTO? {
+    fun save(book: Books): Books? {
         val books = booksRepository.save(book)
-        return toDTO(books)
+        return books
     }
-    fun update(book: Books): BooksDTO? {
+    fun update(book: Books): Books? {
         val books = booksRepository.update(book)
-        return toDTO(books)
+        return books
     }
-    fun delete(id: Long): BooksDTO? {
+    fun delete(id: Long): Books? {
         val book = booksRepository.delete(id)
-        return toDTO(book)
+        return book
     }
     fun getAll(): List<BooksDTO>? {
         val books = booksRepository.findAll()

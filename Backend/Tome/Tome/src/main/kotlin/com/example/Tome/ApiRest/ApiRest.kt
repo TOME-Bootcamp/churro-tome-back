@@ -3,7 +3,6 @@ package com.example.Tome.ApiRest
 import com.example.Tome.Books.Books
 import com.example.Tome.Books.BooksDTO
 import com.example.Tome.BooksService.BooksService
-import jakarta.persistence.PostUpdate
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-@RequestMapping("/api/Books")
+@RequestMapping("/api/books")
 class ApiRest(private val service: BooksService) {
 
     @GetMapping
@@ -34,13 +33,13 @@ class ApiRest(private val service: BooksService) {
     fun getBook(@PathVariable id: Long): ResponseEntity<BooksDTO>{
         val books = service.findBy(id)
         if(books == null){
-            return entityNotFound()
+            return cantFindBook()
         }
         return ResponseEntity.ok(books);
     }
 
     @PostMapping
-    fun updateBook(@RequestBody books: Books): ResponseEntity<BooksDTO>{
+    fun updateBook(@RequestBody books: Books): ResponseEntity<Books>{
         val booksDTO = service.update(books)
         if(booksDTO == null){
             return entityNotFound()
@@ -49,7 +48,7 @@ class ApiRest(private val service: BooksService) {
     }
 
     @DeleteMapping("/delete/{id}")
-    fun deleteBook(@RequestBody id: Long): ResponseEntity<BooksDTO>{
+    fun deleteBook(@RequestBody id: Long): ResponseEntity<Books>{
         val deletedBook = service.delete(id)
         if(deletedBook == null){
             return entityNotFound()
@@ -57,8 +56,11 @@ class ApiRest(private val service: BooksService) {
         return ResponseEntity.ok(deletedBook)
     }
 
-    @PutMapping
-    fun putBook(@RequestBody book: Books): ResponseEntity<BooksDTO>{
+    @PutMapping("/{id}")
+    fun putBook(@RequestBody book: Books, id : Long): ResponseEntity<Books>{
+        if(service.findBy(id) != null){
+            return bookAlreadyExist()
+        }
         return ResponseEntity.ok(service.save(book));
     }
 
@@ -67,7 +69,16 @@ class ApiRest(private val service: BooksService) {
         return ResponseEntity(HttpStatus.BAD_REQUEST)
     }
     @ExceptionHandler
-    fun entityNotFound(): ResponseEntity<BooksDTO> {
+    fun entityNotFound(): ResponseEntity<Books> {
+        return ResponseEntity(HttpStatus.NOT_FOUND)
+    }
+    @ExceptionHandler
+    fun bookAlreadyExist(): ResponseEntity<Books>{
+        return ResponseEntity(HttpStatus.CONFLICT)
+    }
+
+    @ExceptionHandler
+    fun cantFindBook(): ResponseEntity<BooksDTO>{
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 }

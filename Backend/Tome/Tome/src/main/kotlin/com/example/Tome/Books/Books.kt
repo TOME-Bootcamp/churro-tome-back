@@ -17,10 +17,9 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "Books")
 class Books(
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var book_id: Long? = 0,
+    var book_id: Long = 0,
     @Column()
     var title: String = "",
     @Column
@@ -38,7 +37,7 @@ class Books(
 
     @ManyToOne
     @JoinColumn(name = "publisher_id",)
-    var publisher: Publishers? = null,
+    var publisher: Publishers,
 
     @ManyToMany
     @JoinTable(name = "book_authors",
@@ -52,5 +51,4 @@ class Books(
         joinColumns = [JoinColumn(name = "book_id")],
         inverseJoinColumns = [JoinColumn(name = "tags_id")])
     var tags: MutableList<Tags> = mutableListOf(),
-
     )
