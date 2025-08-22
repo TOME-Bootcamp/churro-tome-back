@@ -11,7 +11,7 @@ fun toDTO(book: Book?): BookDTO =
     BookDTO(
         book?.title,
         book?.authors,
-        book?.publishers,
+        book?.publisher,
         book?.tags,
     )
 

@@ -24,12 +24,10 @@ class Book(
     val isbn: String = "",
     val releaseDate: String = "",
     val pages: String = "",
-
     @Column(name = "coverUrl")
     val url: String = "",
     val synopsis: String = "",
     val language: Language = Language.NULL,
-
     @ManyToMany
     @JoinTable(
         name = "book_author",
@@ -37,10 +35,9 @@ class Book(
         inverseJoinColumns = [JoinColumn(name = "author_id")],
     )
     val authors: MutableList<Author>? = mutableListOf(),
-
     @ManyToOne
     @JoinColumn(name = "publisher_id")
-    val publishers: Publisher? = null,
+    val publisher: Publisher? = null,
 
     @ManyToMany
     @JoinTable(

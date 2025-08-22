@@ -11,7 +11,8 @@ import org.springframework.web.server.ResponseStatusException
 class TagService(
     private val tagRepo: TagRepo,
 ) {
-    fun findByBook(book: Book): List<Tags> =
-        tagRepo.findByBook(book)
-            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun findByBook(name: String): List<Book>? =
+        tagRepo.findBooks(name)
+
+    fun findByName(name: String): Tags? = tagRepo.findByName(name)
 }

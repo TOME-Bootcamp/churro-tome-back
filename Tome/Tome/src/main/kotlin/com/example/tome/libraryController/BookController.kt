@@ -20,14 +20,14 @@ import org.springframework.web.server.ResponseStatusException
 import java.util.UUID
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/Books")
 class BookController(
     private val service: BooksService,
 ) {
-    @GetMapping
+    @GetMapping("/getBooks")
     fun getBooks(): List<BookDTO> = service.getAllBooks()?.map(::toDTO) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    @GetMapping
+    @GetMapping("/getByTittle")
     fun getBookByTittle(
         @RequestParam title: String,
     ): BookDTO =
@@ -35,14 +35,14 @@ class BookController(
             service.findByTitle(title) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND),
         )
 
-    @GetMapping
+    @GetMapping("/getByAuthor")
     fun getBooksByAuthor(
         @RequestParam author: List<Author>,
     ): List<BookDTO> =
         service.findByAuthors(author)?.map(::toDTO)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    @GetMapping
+    @GetMapping("/getByIsbn")
     fun getBookByIsbn(
         @RequestParam isbn: String,
     ): BookDTO? = toDTO(service.findByIsbn(isbn))

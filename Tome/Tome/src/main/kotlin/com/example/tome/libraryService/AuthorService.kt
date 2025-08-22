@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException
 class AuthorService(
     private val authorRepo: AuthorRepo,
 ) {
-    fun getBooks(book: Book): List<Author> =
-        authorRepo.findByBook(book)
-            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getBooks(name: String): List<Book>? =
+        authorRepo.findBooks(name)
+    fun getAuthor(name: String): Author? = authorRepo.findByName(name)
 }

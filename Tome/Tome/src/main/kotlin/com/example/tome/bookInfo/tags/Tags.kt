@@ -13,9 +13,7 @@ class Tags(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
-
     val name: String? = null,
-
     @ManyToMany(mappedBy = "tags")
     val tags: MutableList<Book>? = mutableListOf(),
 )

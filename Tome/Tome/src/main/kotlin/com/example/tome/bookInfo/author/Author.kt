@@ -13,9 +13,7 @@ class Author(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
-
     val name: String? = null,
-
     @ManyToMany(mappedBy = "authors")
     val creator: MutableList<Book> = mutableListOf(),
 )
