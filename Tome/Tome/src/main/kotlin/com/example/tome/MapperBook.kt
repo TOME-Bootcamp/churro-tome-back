@@ -14,12 +14,19 @@ fun toDTO(book: Book): BookDTO =
     )
 
 fun allBook(book: Book): allBookDTO =
-    allBookDTO(book.id, book.title,
-        book.isbn, book.url,
-        book.pages, book.releaseDate,
-        book.synopsis, book.language,
-        book.publisher, book.authors,
-        book.tags)
+    allBookDTO(
+        book.id,
+        book.title,
+        book.isbn,
+        book.url,
+        book.pages,
+        book.releaseDate,
+        book.synopsis,
+        book.language,
+        book.publisher,
+        book.authors,
+        book.tags,
+    )
 
 fun conditionBook(book: Book): ConditionBookDTO =
     ConditionBookDTO(

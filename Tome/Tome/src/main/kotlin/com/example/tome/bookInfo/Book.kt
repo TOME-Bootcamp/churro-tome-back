@@ -14,7 +14,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
-import java.util.UUID
 
 @Entity
 class Book(

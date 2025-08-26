@@ -2,7 +2,6 @@ package com.example.tome.libraryController
 
 import com.example.tome.allBook
 import com.example.tome.bookInfo.Book
-import com.example.tome.bookInfo.author.Author
 import com.example.tome.bookInfoDTO.BookDTO
 import com.example.tome.bookInfoDTO.ConditionBookDTO
 import com.example.tome.bookInfoDTO.allBookDTO
@@ -29,8 +28,7 @@ class BookController(
     private val service: BooksService,
 ) {
     @GetMapping("/getBooks")
-    fun getBooks(): List<allBookDTO> =
-        service.getAllBooks()?.map(::allBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getBooks(): List<allBookDTO> = service.getAllBooks()?.map(::allBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     @GetMapping("/getById")
     fun getBookById(
@@ -49,21 +47,23 @@ class BookController(
         )
 
     @GetMapping("/getByWord")
-    fun getBookByWord(@RequestParam word: String): List<ConditionBookDTO> =
+    fun getBookByWord(
+        @RequestParam word: String,
+    ): List<ConditionBookDTO> =
         service.getBooksByWord(word)?.map(::conditionBook) ?: service.findByIsbn(word)?.map(::conditionBook)
-        ?: service.findByAuthors(word)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+            ?: service.findByAuthors(word)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun save(
         @RequestBody book: Book,
-    ): BookDTO = toDTO(service.saveBook(book)?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
+    ): BookDTO = toDTO(service.saveBook(book) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
 
     @PostMapping("{id}")
     fun updateBook(
         @PathVariable id: UUID,
         @RequestParam book: Book,
-    ): BookDTO? = toDTO(service.updateBook(book)?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
+    ): BookDTO? = toDTO(service.updateBook(book) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
