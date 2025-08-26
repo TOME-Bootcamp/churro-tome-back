@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface LibraryRepo : JpaRepository<Book, UUID> {
+interface LibraryRepo : JpaRepository<Book, Long> {
     fun findByTitle(title: String): Book?
 
-    fun findByAuthors(author: List<Author>): List<Book>?
+    fun findByAuthors_NameContainsIgnoreCase(author: String): List<Book>?
 
-    fun findByIsbn(isbn: String): Book?
+    fun findByIsbnContainsIgnoreCase(isbn: String): List<Book>?
+    fun findByTitleContainingIgnoreCase(word: String): List<Book>?
+
 }

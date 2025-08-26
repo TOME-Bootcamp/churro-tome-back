@@ -6,6 +6,7 @@ import com.example.tome.bookInfo.publisher.Publisher
 import com.example.tome.bookInfo.tags.Tags
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -18,32 +19,32 @@ import java.util.UUID
 @Entity
 class Book(
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID? = null,
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long? = null,
     val title: String = "",
     val isbn: String = "",
     val releaseDate: String = "",
     val pages: String = "",
     @Column(name = "coverUrl")
     val url: String = "",
+    @Column(columnDefinition = "TEXT")
     val synopsis: String = "",
     val language: Language = Language.NULL,
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "book_author",
         joinColumns = [JoinColumn(name = "book_id")],
         inverseJoinColumns = [JoinColumn(name = "author_id")],
     )
-    val authors: MutableList<Author>? = mutableListOf(),
-    @ManyToOne
+    val authors: List<Author>? = emptyList(),
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
     val publisher: Publisher? = null,
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "book_tags",
         joinColumns = [JoinColumn(name = "book_id")],
         inverseJoinColumns = [JoinColumn(name = "tags_id")],
     )
-    val tags: MutableList<Tags>? = mutableListOf(),
+    val tags: List<Tags>? = emptyList(),
 )

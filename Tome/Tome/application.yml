@@ -1,12 +1,12 @@
 spring:
   application:
     name: tome
-  profiles:
-    active: ${APPLICATION_PROFILE}
+ # profiles:
+  #  active: ${APPLICATION_PROFILE}
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: "jdbc:postgresql://localhost:5432/tome"
+    username: "brandon"
+    password: "sanderson"
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

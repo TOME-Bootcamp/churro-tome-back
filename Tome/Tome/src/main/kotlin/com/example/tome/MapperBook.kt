@@ -1,28 +1,30 @@
 package com.example.tome
 
 import com.example.tome.bookInfo.Book
-import com.example.tome.bookInfo.author.Author
-import com.example.tome.bookInfo.tags.Tags
-import com.example.tome.bookInfoDTO.AuthorDTO
 import com.example.tome.bookInfoDTO.BookDTO
-import com.example.tome.bookInfoDTO.TagsDTO
+import com.example.tome.bookInfoDTO.ConditionBookDTO
+import com.example.tome.bookInfoDTO.allBookDTO
 
-fun toDTO(book: Book?): BookDTO =
+fun toDTO(book: Book): BookDTO =
     BookDTO(
-        book?.title,
-        book?.authors,
-        book?.publisher,
-        book?.tags,
+        book.title,
+        book.authors,
+        book.publisher,
+        book.tags,
     )
 
-fun toAuthorDTO(author: Author?): AuthorDTO =
-    AuthorDTO(
-        author?.name,
-        author?.creator,
-    )
+fun allBook(book: Book): allBookDTO =
+    allBookDTO(book.id, book.title,
+        book.isbn, book.url,
+        book.pages, book.releaseDate,
+        book.synopsis, book.language,
+        book.publisher, book.authors,
+        book.tags)
 
-fun toTagsDTO(tags: Tags?): TagsDTO =
-    TagsDTO(
-        tags?.name,
-        tags?.tags,
+fun conditionBook(book: Book): ConditionBookDTO =
+    ConditionBookDTO(
+        book.id,
+        book.title,
+        book.authors,
+        book.isbn,
     )

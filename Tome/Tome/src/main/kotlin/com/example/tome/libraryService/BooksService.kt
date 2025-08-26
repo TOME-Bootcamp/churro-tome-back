@@ -13,15 +13,17 @@ class BooksService(
     private val libraryRepo: LibraryRepo,
 ) {
     fun findByTitle(title: String): Book? = libraryRepo.findByTitle(title) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun findById(id: Long): Book? = libraryRepo.findById(id).orElseThrow()?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun findByAuthors(author: List<Author>): List<Book>? =
-        libraryRepo.findByAuthors(author) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun findByAuthors(author: String): List<Book>? =
+        libraryRepo.findByAuthors_NameContainsIgnoreCase(author) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun findByIsbn(isbn: String): Book? = libraryRepo.findByIsbn(isbn)
+    fun findByIsbn(isbn: String): List<Book>? = libraryRepo.findByIsbnContainsIgnoreCase(isbn)
 
     fun getAllBooks(): List<Book>? = libraryRepo.findAll()
+    fun getBooksByWord(word: String): List<Book>? = libraryRepo.findByTitleContainingIgnoreCase(word)
 
-    fun deleteBook(id: UUID): Unit? =
+    fun deleteBook(id: Long): Unit? =
         libraryRepo.delete(
             libraryRepo
                 .findById(id)

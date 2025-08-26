@@ -11,9 +11,8 @@ import java.util.UUID
 @Entity
 class Author(
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID? = null,
-    val name: String? = null,
-    @ManyToMany(mappedBy = "authors")
-    val creator: MutableList<Book> = mutableListOf(),
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long? = null,
+    val name: String,
+    val surname: String,
 )
