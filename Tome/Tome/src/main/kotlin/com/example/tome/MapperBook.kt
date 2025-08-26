@@ -1,9 +1,9 @@
 package com.example.tome
 
 import com.example.tome.bookInfo.Book
+import com.example.tome.bookInfoDTO.AllBookDTO
 import com.example.tome.bookInfoDTO.BookDTO
 import com.example.tome.bookInfoDTO.ConditionBookDTO
-import com.example.tome.bookInfoDTO.allBookDTO
 
 fun toDTO(book: Book): BookDTO =
     BookDTO(
@@ -13,8 +13,8 @@ fun toDTO(book: Book): BookDTO =
         book.tags,
     )
 
-fun allBook(book: Book): allBookDTO =
-    allBookDTO(
+fun allBook(book: Book): AllBookDTO =
+    AllBookDTO(
         book.id,
         book.title,
         book.isbn,

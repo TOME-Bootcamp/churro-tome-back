@@ -2,9 +2,9 @@ package com.example.tome.libraryController
 
 import com.example.tome.allBook
 import com.example.tome.bookInfo.Book
+import com.example.tome.bookInfoDTO.AllBookDTO
 import com.example.tome.bookInfoDTO.BookDTO
 import com.example.tome.bookInfoDTO.ConditionBookDTO
-import com.example.tome.bookInfoDTO.allBookDTO
 import com.example.tome.conditionBook
 import com.example.tome.libraryService.BooksService
 import com.example.tome.toDTO
@@ -28,12 +28,12 @@ class BookController(
     private val service: BooksService,
 ) {
     @GetMapping("/getBooks")
-    fun getBooks(): List<allBookDTO> = service.getAllBooks()?.map(::allBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getBooks(): List<AllBookDTO> = service.getAllBooks()?.map(::allBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     @GetMapping("/getById")
     fun getBookById(
         @RequestParam id: Long,
-    ): allBookDTO =
+    ): AllBookDTO =
         allBook(
             service.findById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND),
         )
@@ -53,7 +53,7 @@ class BookController(
         service.getBooksByWord(word)?.map(::conditionBook) ?: service.findByIsbn(word)?.map(::conditionBook)
             ?: service.findByAuthors(word)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    @PutMapping
+    @PutMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     fun save(
         @RequestBody book: Book,
