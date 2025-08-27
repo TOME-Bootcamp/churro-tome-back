@@ -41,17 +41,18 @@ class BookController(
     @GetMapping("/getByTittle")
     fun getBookByTittle(
         @RequestParam title: String,
-    ): BookDTO =
-        toDTO(
-            service.findByTitle(title) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND),
-        )
-
-    @GetMapping("/getByWord")
-    fun getBookByWord(
-        @RequestParam word: String,
     ): List<ConditionBookDTO> =
-        service.getBooksByWord(word)?.map(::conditionBook) ?: service.findByIsbn(word)?.map(::conditionBook)
-            ?: service.findByAuthors(word)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        (service.getBooksByWord(title)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
+
+    @GetMapping("/getByAuthor")
+    fun getBookByAuthor(
+        @RequestParam word: String,
+    ): List<ConditionBookDTO> = (service.findByAuthors(word)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
+
+    @GetMapping("/getByIsbn")
+    fun getBookByIsbn(
+        @RequestParam word: String,
+    ): List<ConditionBookDTO> = (service.findByIsbn(word)?.map(::conditionBook) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND))
 
     @PutMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)

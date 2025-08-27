@@ -32,6 +32,7 @@ fun conditionBook(book: Book): ConditionBookDTO =
     ConditionBookDTO(
         book.id,
         book.title,
+        book.url,
         book.authors,
         book.isbn,
     )
